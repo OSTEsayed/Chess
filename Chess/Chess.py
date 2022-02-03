@@ -1,12 +1,35 @@
 import tkinter as tk
 from tkinter.ttk import *
-from turtle import width
 
 def startup():
+    global ucan,umust,blocker,bmust,gofrom,goto,bord,white,black,Game,tour,non,cc,rr,sinb,minb,sinw,minw
+    minw=int(waT.get())
+    sinw=int(waT2.get())
+    minb=int(baT.get())
+    sinb=int(baT2.get())
+    blackname=ba.get()
+    whitename=wa.get()
+    def update_clock():
+        global tour,sinb,minb,sinw,minw
+        if tour=="black":
+            sinb = sinb-1
+            if sinb<0:
+                minb =minb-1
+                sinb=60
+            label2.configure(text="Time[{} : {}]".format(minb,sinb))
+        if tour=="white":
+            sinw = sinw-1
+            if sinw<0:
+                minw=minw-1
+                sinw=60
+            label4.configure(text="Time[{} : {}]".format(minw,sinw))
+        chess.after(1000,update_clock)
+
+
+
     castl=[0,0,0,0,0,0]
     s.destroy()
     fr.destroy()
-    global ucan,umust,blocker,bmust,gofrom,goto,bord,white,black,Game,tour,non,cc,rr
     ucan=[]
     umust=[]
     blocker=[]
@@ -1210,13 +1233,14 @@ def startup():
                             goto="NULL"
                             gofrom="NULL"
                             ucan.clear()
+                    
+                        
                 else :
                     gofrom="NULL"
                     ucan.clear()
 
         if Game!="none":
             return
-   
 
     Frame1= tk.Frame(chess,bg="black",width=900,height=500)
     Frame1.place(x=0,y=0)
@@ -1383,6 +1407,33 @@ def startup():
     h7.grid(row=2,column=8)
     h8=tk.Button(Frame1,bg="#A75907",width=88,height=65,image=rb,command=lambda:move(7,7))
     h8.grid(row=1,column=8)
+    
+    blackt = tk.PhotoImage(file = r"blackt.png")
+    frame3= tk.Frame(chess,width=450,height=290)
+    frame3.place(x=760,y=0)
+    label = tk.Label(frame3, image=blackt)
+    label.image = blackt
+    label.place(x=60, y=10)
+    label1 = tk.Label(frame3, text="{}".format(blackname),font=("arial",25))
+    label1.place(x=20, y=100)
+    label2 = tk.Label(frame3, text="Time:[ {}: {}]".format(minb,sinb),font=("arial",25))
+    label2.place(x=250, y=100)
+
+
+
+
+    whitet = tk.PhotoImage(file = r"whitet.png")
+    frame4= tk.Frame(chess,width=450,height=290)
+    frame4.place(x=760,y=290)
+    label3 = tk.Label(frame4, image=whitet)
+    label3.image = whitet
+    label3.place(x=60, y=220)
+    label5 = tk.Label(frame4, text="{}".format(whitename),font=("arial",25))
+    label5.place(x=20, y=150)
+    label4 = tk.Label(frame4, text="Time [ {}: {}]".format(minw,sinw),font=("arial",25))
+    label4.place(x=250, y=150)
+
+    update_clock()    
 
     bord=[
         [[a1,rw],[b1,kw],[c1,fw],[d1,qw],[e1,kingw],[f1,fw],[g1,kw],[h1,rw]],
@@ -1394,6 +1445,7 @@ def startup():
         [[a7,pb],[b7,pb],[c7,pb],[d7,pb],[e7,pb],[f7,pb],[g7,pb],[h7,pb]],
         [[a8,rb],[b8,kb],[c8,fb],[d8,qb],[e8,kingb],[f8,fb],[g8,kb],[h8,rb]]
         ]
+
     chess.mainloop()
 
 chess= tk.Tk()
@@ -1421,11 +1473,14 @@ wa.insert(0,z)
 wa.update()
 timw= tk.Label(frW,text=" Time:",font=("arial",25),fg="#A75907",bg="white")
 timw.grid(row=2,column=0,sticky="W")
-waT= tk.Entry(frW,border=5,font=("Courrier",20),justify="center")
-waT.grid(row=2,column=1,columnspan=2,sticky="SE")
-z="00:00"
-waT.insert(0,z)
+waT= tk.Entry(frW,border=5,font=("Courrier",15),justify="center",width=10)
+waT.grid(row=2,column=1)
+waT2= tk.Entry(frW,border=5,font=("Courrier",15),justify="center",width=10)
+waT2.grid(row=2,column=2)
+waT.insert(0,"10")
+waT2.insert(0,"00")
 waT.update()
+waT2.update()
 ranw= tk.Label(frW,text="RANK :",font=("arial",25),fg="#A75907",bg="white")
 ranw.grid(row=3,column=0,sticky="W")
 war= tk.Entry(frW,border=5,font=("Courrier",20),justify="center")
@@ -1450,11 +1505,14 @@ ba.insert(0,z)
 ba.update()
 timb= tk.Label(frB,text=" Time:",font=("arial",25),fg="white",bg="black")
 timb.grid(row=2,column=0,sticky="W")
-baT= tk.Entry(frB,border=5,font=("Courrier",20),justify="center")
-baT.grid(row=2,column=1,columnspan=2,sticky="SE")
-z="00:00"
-baT.insert(0,z)
+baT= tk.Entry(frB,border=5,font=("Courrier",15),justify="center",width=10)
+baT.grid(row=2,column=1)
+baT2= tk.Entry(frB,border=5,font=("Courrier",15),justify="center",width=10)
+baT2.grid(row=2,column=2)
+baT.insert(0,"20")
+baT2.insert(0,"00")
 baT.update()
+baT2.update()
 ranb= tk.Label(frB,text="RANK :",font=("arial",25),fg="white",bg="black")
 ranb.grid(row=3,column=0,sticky="W")
 bar= tk.Entry(frB,border=5,font=("Courrier",20),justify="center")
@@ -1469,5 +1527,4 @@ butb2.place(x=250,y=250)
 
 s=tk.Button(chess,bg="#A75907",text="Start Playing",command=startup,fg="white")
 s.place(x=500,y=500,width=200,height=70)
-
 chess.mainloop()
