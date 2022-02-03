@@ -3,6 +3,7 @@ from tkinter.ttk import *
 from turtle import width
 
 def startup():
+    castl=[0,0,0,0,0,0]
     s.destroy()
     fr.destroy()
     global ucan,umust,blocker,bmust,gofrom,goto,bord,white,black,Game,tour,non,cc,rr
@@ -831,6 +832,16 @@ def startup():
                                 ucan.append(bord[c-1][r+1])
                             if test(c-1,r-1)==1:
                                 ucan.append(bord[c-1][r-1])
+                            if castl[3]==0 and castl[4]==0:
+                                if bord[7][5][1]=="e" and bord[7][6][1]=="e" and test(7,5)==1 and test(7,6)==1:
+                                    ucan.append(bord[7][6])
+                            if castl[3]==0 and castl[5]==0:
+                                if bord[7][1][1]=="e" and bord[7][2][1]=="e" and bord[7][3][1]=="e" and test(7,2)==1 and test(7,1)==1 and test(7,3)==1:
+                                    ucan.append(bord[7][2])
+                                    
+
+
+                    
 
                         if x==1 and bord[c][r][1]!=kingb:
                             copie=ucan.copy()
@@ -1070,6 +1081,13 @@ def startup():
                                 ucan.append(bord[c-1][r+1])
                             if test(c-1,r-1)==1:
                                 ucan.append(bord[c-1][r-1])
+                            if castl[0]==0 and castl[1]==0:
+                                if bord[0][5][1]=="e" and bord[0][6][1]=="e" and test(0,5)==1 and test(0,6)==1:
+                                    ucan.append(bord[0][6])
+                            if castl[0]==0 and castl[2]==0:
+                                if bord[0][1][1]=="e" and bord[0][2][1]=="e" and bord[0][3][1]=="e" and test(0,2)==1 and test(0,1)==1 and test(0,3)==1:
+                                    ucan.append(bord[0][2])
+
                         if x==1 and bord[c][r][1]!=kingw:
                             copie=ucan.copy()
                             ucan.clear()
@@ -1121,18 +1139,77 @@ def startup():
                         gofrom="NULL"
                         ucan.clear()
                     else:
-                        goto=bord[c][r]
-                        goto[0].config(image=gofrom[1],width=88,height=65)
-                        gofrom[0].config(image=non)
-                        bord[c][r][1]=gofrom[1]
-                        bord[cc][rr][1]="e"
-                        
-                        if tour=="black":
+                        if gofrom[1]==kingw and bord[c][r]==bord[0][6]:
+                            bord[0][4][0].config(image=non)
+                            bord[0][4][1]="e"
+                            bord[0][5][0].config(image=rw)
+                            bord[0][5][1]=rw
+                            bord[0][6][0].config(image=kingw)
+                            bord[0][6][1]=kingw
+                            bord[0][7][0].config(image=non)
+                            bord[0][7][1]="e"
+                            castl[0]=1
+                            tour="black"
+                            goto="NULL"
+                            gofrom="NULL"
+                            ucan.clear()
+                        elif gofrom[1]==kingw and bord[c][r]==bord[0][2]:
+                            bord[0][4][0].config(image=non)
+                            bord[0][4][1]="e"
+                            bord[0][3][0].config(image=rw)
+                            bord[0][3][1]=rw
+                            bord[0][2][0].config(image=kingw)
+                            bord[0][2][1]=kingw
+                            bord[0][0][0].config(image=non)
+                            bord[0][0][1]="e"
+                            castl[0]=1
+                            tour="black"
+                            goto="NULL"
+                            gofrom="NULL"
+                            ucan.clear()
+                        if gofrom[1]==kingb and bord[c][r]==bord[7][6]:
+                            bord[7][4][0].config(image=non)
+                            bord[7][4][1]="e"
+                            bord[7][5][0].config(image=rb)
+                            bord[7][5][1]=rb
+                            bord[7][6][0].config(image=kingb)
+                            bord[7][6][1]=kingb
+                            bord[7][7][0].config(image=non)
+                            bord[7][7][1]="e"
+                            castl[3]=1
                             tour="white"
-                        else:tour="black"
-                        goto="NULL"
-                        gofrom="NULL"
-                        ucan.clear()
+                            goto="NULL"
+                            gofrom="NULL"
+                            ucan.clear()
+                        elif gofrom[1]==kingb and bord[c][r]==bord[7][2]:
+                            bord[7][4][0].config(image=non)
+                            bord[7][4][1]="e"
+                            bord[7][3][0].config(image=rb)
+                            bord[7][3][1]=rb
+                            bord[7][2][0].config(image=kingb)
+                            bord[7][2][1]=kingb
+                            bord[7][0][0].config(image=non)
+                            bord[7][0][1]="e"
+                            castl[3]=1
+                            tour="white"
+                            goto="NULL"
+                            gofrom="NULL"
+                            ucan.clear()
+
+
+                        else:
+                            goto=bord[c][r]
+                            goto[0].config(image=gofrom[1],width=88,height=65)
+                            gofrom[0].config(image=non)
+                            bord[c][r][1]=gofrom[1]
+                            bord[cc][rr][1]="e"
+                            
+                            if tour=="black":
+                                tour="white"
+                            else:tour="black"
+                            goto="NULL"
+                            gofrom="NULL"
+                            ucan.clear()
                 else :
                     gofrom="NULL"
                     ucan.clear()
